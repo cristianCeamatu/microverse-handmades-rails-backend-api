@@ -46,7 +46,7 @@ class ItemsController < ApplicationController
     p "current_api_user.favorites: #{current_api_user.favorites}"
     if type == 'favorite'
       current_api_user.favorites << @item unless current_api_user.favorites.include? @item
-      render json: {success: true, message: "You favorited #{@item.name}" }
+      render json: { success: true, message: "You favorited #{@item.name}" }
 
     elsif type == 'unfavorite'
       current_api_user.favorites.delete(@item) if current_api_user.favorites.include? @item
@@ -54,18 +54,19 @@ class ItemsController < ApplicationController
 
     else
       # Type missing, nothing happens
-      render json: { success: false, message: "Type of request is missing (favorite/unfavorite)" }, status: :unprocessable_entity
+      render json: { success: false, message: 'Provide a type (favorite/unfavorite)' }, status: :unprocessable_entity
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def item_params
-      params.require(:item).permit(:user_id, :name, :description, :price, :ratings, :material, :usedFor)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def item_params
+    params.require(:item).permit(:user_id, :name, :description, :price, :ratings, :material, :usedFor)
+  end
 end
