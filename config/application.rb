@@ -40,7 +40,7 @@ module MicroverseFinalBackend
         resource(
           '*',
           headers: :any,
-          expose: ["Authorization"],
+          expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
           methods: %i[get patch put delete post options show]
         )
       end
