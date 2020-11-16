@@ -1,16 +1,17 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
+  before_action :authenticate_api_user!, only: %i[create update favorite destroy]
 
   # GET /items
   def index
     @items = Item.all
 
-    render json: @items
+    render json: @items.to_json(include: %i[user favorited_by])
   end
 
   # GET /items/1
   def show
-    render json: @item
+    render json: @items.to_json(include: %i[user favorited_by])
   end
 
   # POST /items
@@ -36,6 +37,22 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   def destroy
     @item.destroy
+  end
+
+  def favorite
+    type = params[:type]
+    if type == 'favorite'
+      current_user.favorites << @recipe
+      render json: {success: true, message: "You favorited #{@recipe.name}" }
+
+    elsif type == 'unfavorite'
+      current_user.favorites.delete(@recipe)
+      render json: { success: true, message: "Unfavorited #{@recipe.name}" }
+
+    else
+      # Type missing, nothing happens
+      render json: { success: false }, status: :unprocessable_entity
+    end
   end
 
   private
