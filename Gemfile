@@ -37,5 +37,18 @@ group :development do
   gem 'hirb'
 end
 
+group :development, :test do
+  gem 'pry-rails'
+  %w[rspec-core rspec-rails rspec-expectations rspec-mocks rspec-support].each do |lib|
+    gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
+  end
+end
+group :test do
+  gem 'factory_bot_rails'
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+  gem 'database_cleaner'
+end
+# I used faker master branch so as to have the gem latest version and prevent unnecessary errors.
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

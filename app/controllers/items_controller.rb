@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :update, :destroy]
+  before_action :set_item, only: %i[show update destroy favorite]
   before_action :authenticate_api_user!, only: %i[create update favorite destroy]
 
   # GET /items
@@ -11,7 +11,7 @@ class ItemsController < ApplicationController
 
   # GET /items/1
   def show
-    render json: @items.to_json(include: %i[user favorited_by])
+    render json: @item.to_json(include: %i[user favorited_by])
   end
 
   # POST /items
@@ -41,13 +41,16 @@ class ItemsController < ApplicationController
 
   def favorite
     type = params[:type]
+    p "params: #{params}"
+    p "current_api_user: #{current_api_user}"
+    p "current_api_user.favorites: #{current_api_user.favorites}"
     if type == 'favorite'
-      current_api_user.favorites << @recipe
-      render json: {success: true, message: "You favorited #{@recipe.name}" }
+      current_api_user.favorites << @item unless current_api_user.favorites.include? @item
+      render json: {success: true, message: "You favorited #{@item.name}" }
 
     elsif type == 'unfavorite'
-      current_api_user.favorites.delete(@recipe)
-      render json: { success: true, message: "Unfavorited #{@recipe.name}" }
+      current_api_user.favorites.delete(@item) if current_api_user.favorites.include? @item
+      render json: { success: true, message: "Unfavorited #{@item.name}" }
 
     else
       # Type missing, nothing happens
