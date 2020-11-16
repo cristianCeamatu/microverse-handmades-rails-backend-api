@@ -39,7 +39,6 @@ RSpec.describe 'Session', type: :request do
   end
   describe 'DELETE /api/v1/auth/sign_out' do
     before do
-      # login @user created in the beore block in outer describe block
       post @sign_in_url, params: @login_params, as: :json
       @headers = {
         'uid' => response.headers['uid'],
