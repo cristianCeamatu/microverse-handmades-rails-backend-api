@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true, length: { minimum: 6, maximum: 80 }
   validates :name, presence: true, length: { minimum: 6, maximum: 80 }
-  validates :nickname, presence: true, length: { minimum: 6, maximum: 20 }
+  validates :nickname, presence: true, length: { minimum: 2, maximum: 20 }
 
   validates_uniqueness_of :email, on: :create
 
