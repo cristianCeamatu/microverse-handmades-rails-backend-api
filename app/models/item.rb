@@ -13,6 +13,6 @@ class Item < ApplicationRecord
   validates :image, presence: true
 
   def image_url
-    image.nil? ? nil : rails_representation_url(image.variant(resize: '80'), host: 'localhost:3000')
+    image.nil? ? nil : rails_representation_url(image.variant(resize: '80'), host: 'https://handmades-rails-api-backend.herokuapp.com/')
   end
 end
