@@ -21,6 +21,7 @@ class ItemsController < ApplicationController
     if @item.save
       render json: @item.to_json(include: %i[user favorited_by image]), status: :created, location: @item
     else
+      p @item.errors.full_messages
       render json: @item.errors.full_messages, status: :unprocessable_entity
     end
   end
