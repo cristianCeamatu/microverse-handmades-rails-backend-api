@@ -6,12 +6,12 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all.order('created_at DESC')
 
-    render json: @items.to_json(include: %i[user favorited_by])
+    render json: @items.to_json(include: %i[user favorited_by image])
   end
 
   # GET /items/1
   def show
-    render json: @item.to_json(include: %i[user favorited_by])
+    render json: @item.to_json(include: %i[user favorited_by image])
   end
 
   # POST /items
@@ -19,7 +19,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
 
     if @item.save
-      render json: @item.to_json(include: %i[user favorited_by]), status: :created, location: @item
+      render json: @item.to_json(include: %i[user favorited_by image]), status: :created, location: @item
     else
       render json: @item.errors.full_messages, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1
   def update
     if @item.update(item_params)
-      render json: @item.to_json(include: %i[user favorited_by])
+      render json: @item.to_json(include: %i[user favorited_by image])
     else
       render json: @item.errors.full_messages, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   def destroy
     @item.destroy
-    render json: @item.to_json(include: %i[user favorited_by])
+    render json: @item.to_json(include: %i[user favorited_by image])
   end
 
   # POST /items/1/favorite
@@ -69,6 +69,6 @@ class ItemsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def item_params
-    params.require(:item).permit(:user_id, :name, :description, :price, :ratings, :material, :usedFor)
+    params.require(:item).permit(:user_id, :name, :description, :price, :ratings, :material, :usedFor, :image)
   end
 end
