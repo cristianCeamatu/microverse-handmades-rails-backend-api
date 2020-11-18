@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
 
   # GET /items
   def index
-    @items = Item.all
+    @items = Item.all.order('created_at DESC')
 
     render json: @items.to_json(include: %i[user favorited_by])
   end
@@ -40,6 +40,7 @@ class ItemsController < ApplicationController
     render json: @item.to_json(include: %i[user favorited_by])
   end
 
+  # POST /items/1/favorite
   def favorite
     type = params[:type]
     p "params: #{params}"
