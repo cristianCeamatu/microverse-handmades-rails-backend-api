@@ -12,16 +12,15 @@ class ItemsController < ApplicationController
   # GET /items/1
   def show
     render json: serialize_item(@item)
+  end
 
   # POST /items
   def create
     @item = Item.new(item_params)
 
     if @item.save
-      p serialize_item(@item)
       render json: serialize_item(@item), status: :created, location: @item
     else
-      p @item.errors.full_messages
       render json: @item.errors.full_messages, status: :unprocessable_entity
     end
   end
@@ -39,6 +38,7 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     render json: serialize_item(@item)
+  end
 
   # POST /items/1/favorite
   def favorite
