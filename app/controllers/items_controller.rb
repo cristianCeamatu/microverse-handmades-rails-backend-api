@@ -11,8 +11,7 @@ class ItemsController < ApplicationController
 
   # GET /items/1
   def show
-    render json: @item.to_json(include: %i[user favorited_by image])
-  end
+    render json: serialize_item(@item)
 
   # POST /items
   def create
@@ -39,8 +38,7 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   def destroy
     @item.destroy
-    render json: @item.to_json(include: %i[user favorited_by])
-  end
+    render json: serialize_item(@item)
 
   # POST /items/1/favorite
   def favorite
