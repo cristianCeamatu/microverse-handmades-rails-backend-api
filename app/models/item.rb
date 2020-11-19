@@ -12,8 +12,11 @@ class Item < ApplicationRecord
   validates :usedFor, presence: true, length: { minimum: 2, maximum: 60 }
   validates :image, presence: true
 
+  def set_host
+    Rails.env.production? ? 'https://handmades-rails-api-backend.herokuapp.com' : 'http://localhost:3000'
+  end
+
   def image_url
-    image.nil? ? nil : rails_representation_url(image.variant(resize: '200'), host: 'http://localhost:3000')
-    # image.nil? ? nil : rails_representation_url(image.variant(resize: '200'), host: 'https://handmades-rails-api-backend.herokuapp.com')
+    image.nil? ? nil : rails_representation_url(image.variant(resize: '400x600'), host: set_host)
   end
 end
