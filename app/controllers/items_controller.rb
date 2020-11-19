@@ -76,6 +76,7 @@ class ItemsController < ApplicationController
   def serialize_item(item)
     {
       id: item.id,
+      name: item.name,
       description: item.description,
       price: item.price,
       usedFor: item.usedFor,
