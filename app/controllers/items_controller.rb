@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all.order('created_at DESC')
 
-    render json: @items.to_json(include: %i[user favorited_by image])
+    render json: serialize_items(@items)
   end
 
   # GET /items/1
@@ -19,7 +19,8 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
 
     if @item.save
-      render json: @item.to_json(include: %i[user favorited_by image]), status: :created, location: @item
+      p serialize_item(@item)
+      render json: serialize_item(@item), status: :created, location: @item
     else
       p @item.errors.full_messages
       render json: @item.errors.full_messages, status: :unprocessable_entity
@@ -29,7 +30,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1
   def update
     if @item.update(item_params)
-      render json: @item.to_json(include: %i[user favorited_by image])
+      render json: serialize_item(@item)
     else
       render json: @item.errors.full_messages, status: :unprocessable_entity
     end
@@ -38,7 +39,7 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   def destroy
     @item.destroy
-    render json: @item.to_json(include: %i[user favorited_by image])
+    render json: @item.to_json(include: %i[user favorited_by])
   end
 
   # POST /items/1/favorite
@@ -60,13 +61,31 @@ class ItemsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])
   end
 
-  # Only allow a trusted parameter "white list" through.
   def item_params
     params.permit(:user_id, :name, :description, :price, :ratings, :usedFor, :image)
+  end
+
+  def serialize_items(items)
+    items.map { |item| serialize_item(item) }
+  end
+
+  def serialize_item(item)
+    {
+      id: item.id,
+      description: item.description,
+      price: item.price,
+      usedFor: item.usedFor,
+      ratings: item.ratings,
+      image_url: item.image_url,
+      created_at: item.created_at,
+      updated_at: item.updated_at,
+      user_id: item.user_id,
+      user_name: item.user.name,
+      favorited_by: item.favorited_by
+    }
   end
 end
