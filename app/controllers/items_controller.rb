@@ -52,7 +52,6 @@ class ItemsController < ApplicationController
       render json: { success: true, message: "Unfavorited #{@item.name}" }
 
     else
-      # Type missing, nothing happens
       render json: { success: false, message: 'Provide a type (favorite/unfavorite)' }, status: :unprocessable_entity
     end
   end
