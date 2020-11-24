@@ -28,10 +28,6 @@
 
 ## This web app is live, you can check it here: [Live demo](https://handmades-rails-api-backend.herokuapp.com/)
 
-## Screenshot of the frontend app.
-
-![image](readme-assets/app-screenshot.png)
-
 ## React Frontend [live demo](https://handmades-react-redux-toolkit.herokuapp.com/)
 
 ## React Frontend [github link](https://github.com/cristianCeamatu/microverse-handmades-react-redux-toolkit)
