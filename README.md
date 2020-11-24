@@ -19,6 +19,7 @@
 - `GET /items` - all items from the database.
 - `GET /items/:id` - get items details by id.
 - `POST /items/` - create a new item
+- `POST /items/:id/favorite` - to favorite/unfavorite and item
 - `DELETE /items/:id` - find the item by id and delete it from the database
 
 #### Current working endpoints for sessions and registrations
