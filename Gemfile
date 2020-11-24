@@ -19,8 +19,8 @@ gem 'puma', '~> 4.1'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
+gem 'aws-sdk-s3', require: false
 gem 'image_processing', '~> 1.2'
-gem "aws-sdk-s3", require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -48,7 +48,7 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
-   gem 'shoulda-matchers', '~> 4.0'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 # I used faker master branch so as to have the gem latest version and prevent unnecessary errors.
 

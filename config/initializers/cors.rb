@@ -18,7 +18,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
   allow do
 
-    origins 'https://handmades-react-redux-toolkit.herokuapp.com/'
+    origins '*'
 
 
 

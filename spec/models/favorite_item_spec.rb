@@ -14,7 +14,7 @@ RSpec.describe FavoriteItem, type: :model do
   describe 'scopes' do
     before :each do
       @user = FactoryBot.create(:user)
-      @item = @user.items.create!(name: 'Example',description: 'Example desx', price: 55.35, usedFor: 'Example use')
+      @item = @user.items.create!(name: 'Example', description: 'Example desx', price: 55.35, usedFor: 'Example use')
       @favorite_item = @user.favorite_items.create!(item_id: @item.id)
     end
 
