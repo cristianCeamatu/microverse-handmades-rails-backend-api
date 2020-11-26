@@ -40,7 +40,7 @@ class ItemsController < ApplicationController
     render json: serialize_item(@item)
   end
 
-  # POST /items/1/favorite
+  # POST /items/:id/favorite
   def favorite
     type = params[:type]
     if type == 'favorite'
